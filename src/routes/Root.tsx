@@ -1,6 +1,8 @@
 import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
+import CounterStore from '../store/CounterStore.ts';
+import Counter from "../components/Counter";
 
-export default function Root() {
+const Root = () => {
   const { contacts }: any = useLoaderData();
 
   return (
@@ -23,6 +25,7 @@ export default function Root() {
             <button type="submit">New</button>
           </Form>
         </div>
+        <Counter store={CounterStore}/>
         <nav>
           {contacts.length ? (
             <ul>
@@ -62,3 +65,5 @@ export default function Root() {
     </>
   );
 }
+
+export default Root;
