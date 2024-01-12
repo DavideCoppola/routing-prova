@@ -1,10 +1,11 @@
+import { redirect } from "react-router-dom";
+import { IContactStore } from "./store/ContactStore";
 import {
   getContacts,
   createContact,
   getContact,
   updateContact,
 } from "./components/Contacts";
-import { redirect } from "react-router-dom";
 
 export async function rootLoader() {
   const contacts = await getContacts();
@@ -27,3 +28,18 @@ export async function editContactAction({ request, params }: any) {
   await updateContact(params.contactId, updates);
   return redirect(`/contacts/${params.contactId}`);
 }
+
+
+// Test functions for actions with mobx
+export function rootActionHandler(contactStore: IContactStore) {
+  const contactId = contactStore.createContact();
+  return redirect(`/contacts/${contactId}/edit`);
+}
+
+export async function editContactActionHandler(request: any, params: any, contactStore: IContactStore) {
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData);
+  contactStore.updateContact(params.contactId, updates);
+  return redirect(`/contacts/${params.contactId}`);
+}
+
