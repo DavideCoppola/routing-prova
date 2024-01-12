@@ -11,7 +11,7 @@ import ContactStore from "./store/ContactStore.ts";
 import Root from "./routes/Root.tsx";
 import Contact from "./routes/Contact.tsx";
 import EditContact from "./routes/EditContact.tsx";
-import Index from "./routes/index";
+import Index from "./routes/Index";
 import ErrorPage from "./components/errorPage.tsx";
 
 // MobX Store
