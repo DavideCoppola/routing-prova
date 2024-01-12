@@ -3,35 +3,41 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
-  rootLoader,
-  rootAction,
-  contactLoader,
+  /* rootLoader, */
+  /* rootAction, */
+  /* contactLoader, */
   editContactAction,
+  rootActionHandler
 } from "./utils.ts";
-import { contactStore } from "./store/ContactStore.ts";
+import ContactStore from "./store/ContactStore.ts";
 import Root from "./routes/Root.tsx";
 import Contact from "./routes/Contact.tsx";
-import EditContact from "./routes/Edit.tsx";
+import EditContact from "./routes/EditContact.tsx";
 import ErrorPage from "./components/errorPage.tsx";
+
+// MobX Store
+const contactStore = new ContactStore();
+
+// Routes
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root contactStore={contactStore}/>,
+    element: <Root contactStore={contactStore} />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
-    action: rootAction,
+    /* loader: rootLoader, */
+    action: () => rootActionHandler(contactStore),
     children: [
       {
         path: "contacts/:contactId",
-        element: <Contact contactStore={contactStore}/>,
-        loader: contactLoader,
+        element: <Contact contactStore={contactStore} />,
+        /* loader: contactLoader, */
       },
       {
         path: "contacts/:contactId/edit",
         element: <EditContact contactStore={contactStore} />,
-        loader: contactLoader,
-        action: editContactAction
+        /* loader: contactLoader, */
+        action: editContactAction,
       },
     ],
   },

@@ -55,7 +55,7 @@ const Root = observer((props: RootProps) => {
                         {contact.first} {contact.last}
                       </>
                     ) : (
-                      <i>No Name</i>
+                      <i>No Contact name</i>
                     )}{" "}
                     {contact.favorite && <span>★</span>}
                   </Link>

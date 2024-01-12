@@ -66,4 +66,4 @@ class ContactStore implements IContactStore {
 
 }
 
-export const  contactStore = new ContactStore();
+export default ContactStore;
