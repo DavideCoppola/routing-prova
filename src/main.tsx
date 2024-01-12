@@ -8,6 +8,7 @@ import {
   contactLoader,
   editContactAction,
 } from "./utils.ts";
+import { contactStore } from "./store/ContactStore.ts";
 import Root from "./routes/Root.tsx";
 import Contact from "./routes/Contact.tsx";
 import EditContact from "./routes/Edit.tsx";
@@ -16,19 +17,19 @@ import ErrorPage from "./components/errorPage.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Root contactStore={contactStore}/>,
     errorElement: <ErrorPage />,
     loader: rootLoader,
     action: rootAction,
     children: [
       {
         path: "contacts/:contactId",
-        element: <Contact />,
+        element: <Contact contactStore={contactStore}/>,
         loader: contactLoader,
       },
       {
         path: "contacts/:contactId/edit",
-        element: <EditContact />,
+        element: <EditContact contactStore={contactStore} />,
         loader: contactLoader,
         action: editContactAction
       },

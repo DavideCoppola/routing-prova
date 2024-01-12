@@ -1,17 +1,20 @@
 import { observer } from "mobx-react";
 import { ICounterStore } from "../store/CounterStore";
+interface CounterProps {
+  counterStore: ICounterStore
+}
 
-const Counter = observer( ({ store } : {store: ICounterStore}) => {
+const Counter = observer( (props: CounterProps) => {
   return (
     <>
     <div style={{ alignItems: 'center', textAlign: 'center'}}>
-      <p>Count is: {store.count}</p>
+      <p>Count is: {props.counterStore.count}</p>
     </div>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem'}}>
-      <button onClick={() => store.increment()}>
+      <button onClick={() => props.counterStore.increment()}>
         Increase
       </button>
-      <button onClick={() => store.decrement()}>
+      <button onClick={() => props.counterStore.decrement()}>
         decrease
       </button>
     </div>

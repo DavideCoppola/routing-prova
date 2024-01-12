@@ -1,29 +1,20 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { observer } from "mobx-react";
+import { Form/* , useLoaderData, */, useParams } from "react-router-dom";
+import { IContactStore } from "../store/ContactStore";
+import { Contact as ContactType } from "../types/ContactStoreTypes";
 
-type ContactElement = {
-  first: string;
-  last: string;
-  avatar: string;
-  twitter: string;
-  notes: string;
-  favorite: boolean;
+interface ContactProps {
+  contactStore: IContactStore
 }
 
-export default function Contact() {
+const Contact = observer((props: ContactProps) => {
 
-  const { contact }: any = useLoaderData();
-  
-  /* const mockedContact : ContactElement = {
-    first: "Your",
-    last: "Name",
-    avatar: "https://placekitten.com/g/200/200",
-    twitter: "your_handle",
-    notes: "Some notes",
-    favorite: true,
-  }; */
+  const { contactStore } = props;
+  const { contactId } = useParams();
+  const contact = contactStore.getContact(contactId ?? '');
 
   return (
-    <div id="contact">
+    ( contact ? <div id="contact">
       <div>
         <img
           key={contact.avatar}
@@ -77,12 +68,12 @@ export default function Contact() {
           </Form>
         </div>
       </div>
-    </div>
+    </div> : <p>No Contact found</p>)
   );
-}
+})
 
 interface FavoriteProps {
-  contact: ContactElement
+  contact: ContactType
 }
 
 function Favorite({ contact }: FavoriteProps) {
@@ -104,3 +95,5 @@ function Favorite({ contact }: FavoriteProps) {
     </Form>
   );
 }
+
+export default Contact;

@@ -1,10 +1,19 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { Form/* , useLoaderData */, useParams } from "react-router-dom";
+import { observer } from "mobx-react";
+import { IContactStore } from "../store/ContactStore";
 
-export default function EditContact() {
-  const { contact }: any = useLoaderData();
+interface EditContactProps {
+  contactStore: IContactStore,
+}
+
+const EditContact = observer((props: EditContactProps) => {
+  // const { contact }: any = useLoaderData();
+  const { contactStore } = props;
+  const { contactId } = useParams();
+  const contact = contactStore.getContact(contactId ?? '');
 
   return (
-    <Form method="post" id="contact-form">
+    ( contact ? <Form method="post" id="contact-form">
       <p>
         <span>Name</span>
         <input
@@ -54,5 +63,10 @@ export default function EditContact() {
         <button type="button">Cancel</button>
       </p>
     </Form>
+      : 
+      <p>No contact found</p>
+    )
   );
-}
+})
+
+export default EditContact;
