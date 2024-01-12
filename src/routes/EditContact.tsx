@@ -1,4 +1,4 @@
-import { Form, useParams } from "react-router-dom";
+import { Form, useParams,useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
 import { IContactStore } from "../store/ContactStore";
 
@@ -11,6 +11,8 @@ const EditContact = observer((props: EditContactProps) => {
   const { contactStore } = props;
   const { contactId } = useParams();
   const contact = contactStore.getContact(contactId ?? '');
+
+  const navigate = useNavigate();
 
   return (
     ( contact ? <Form method="post" id="contact-form">
@@ -60,7 +62,7 @@ const EditContact = observer((props: EditContactProps) => {
       </label>
       <p>
         <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={() => navigate(-1)}>Cancel</button>
       </p>
     </Form>
       : 
