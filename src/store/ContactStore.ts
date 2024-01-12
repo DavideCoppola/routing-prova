@@ -5,7 +5,7 @@ import { Contact } from "../types/ContactStoreTypes";
 export interface IContactStore {
   contacts: Contact[],
   getContacts: (query?: string) => Contact[],
-  createContact: () => Contact,
+  createContact: () => string,
   getContact: (id: string) => Contact | null,
   updateContact: (id: string, updates: {[key: string]: any}) => void,
   deleteContact: (id: string) => boolean,
@@ -35,10 +35,8 @@ class ContactStore implements IContactStore {
   createContact() {
     const id = Math.random().toString(36).substring(2, 9);
     const contact: Contact = { id, createdAt: Date.now() };
-    const updatedContacts = this.getContacts(id);
-    updatedContacts.unshift(contact);
-    this.contacts = updatedContacts;
-    return contact;
+    this.contacts.unshift(contact);
+    return id;
   }
 
   getContact(id: string) {

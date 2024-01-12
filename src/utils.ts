@@ -32,8 +32,8 @@ export async function editContactAction({ request, params }: any) {
 
 // Test functions for actions with mobx
 export function rootActionHandler(contactStore: IContactStore) {
-  const contact = contactStore.createContact();
-  return redirect(`/contacts/${contact.id}/edit`);
+  const contactId = contactStore.createContact();
+  return redirect(`/contacts/${contactId}/edit`);
 }
 
 export async function editContactActionHandler(request: any, params: any, contactStore: IContactStore) {

@@ -1,8 +1,7 @@
-import { Outlet, Link, /* useLoaderData,  Form */ } from "react-router-dom";
+import { Outlet, Link, Form } from "react-router-dom";
 import CounterStore from '../store/CounterStore.ts';
 import { IContactStore } from "../store/ContactStore.ts";
 import { observer } from "mobx-react";
-import { redirect } from "react-router-dom";
 import Counter from "../components/Counter";
 interface RootProps {
   contactStore: IContactStore
@@ -12,16 +11,6 @@ const Root = observer((props: RootProps) => {
   // const { contacts }: any = useLoaderData();
   const { contactStore } = props;
   const { contacts } = contactStore;
-
-  // console.log(contacts);
-
-  const createContactHandler = () => {
-    const contact = contactStore.createContact();
-    if (contact){
-      console.log('creato: ', contact)
-      return redirect(`/contacts/${contact.id}/edit`);
-    }
-  }
 
   return (
     <>
@@ -39,9 +28,9 @@ const Root = observer((props: RootProps) => {
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
           </form>
-          <button onClick={createContactHandler}>New</button>
-          {/* <form method="post">
-          </form> */}
+          <Form method="post">
+            <button type="submit">New</button>
+          </Form>
         </div>
         <Counter counterStore={CounterStore}/>
         <nav>
