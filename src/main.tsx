@@ -6,8 +6,9 @@ import {
   /* rootLoader, */
   /* rootAction, */
   /* contactLoader, */
-  editContactAction,
-  rootActionHandler
+  /* editContactAction, */
+  rootActionHandler,
+  editContactActionHandler
 } from "./utils.ts";
 import ContactStore from "./store/ContactStore.ts";
 import Root from "./routes/Root.tsx";
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
         path: "contacts/:contactId/edit",
         element: <EditContact contactStore={contactStore} />,
         /* loader: contactLoader, */
-        action: editContactAction,
+        action: ({request, params}: any) => editContactActionHandler(request, params, contactStore),
       },
     ],
   },

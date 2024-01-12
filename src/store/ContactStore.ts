@@ -7,7 +7,7 @@ export interface IContactStore {
   getContacts: (query?: string) => Contact[],
   createContact: () => Contact,
   getContact: (id: string) => Contact | null,
-  updateContact: (id: string, updates: {[key: string]: any}) => Contact,
+  updateContact: (id: string, updates: {[key: string]: any}) => void,
   deleteContact: (id: string) => boolean,
 }
 
@@ -52,7 +52,6 @@ class ContactStore implements IContactStore {
     if (!contact) throw new Error("No contact found for" + id);
     Object.assign(contact, updates);
     this.contacts[contactIndex] = contact;
-    return contact;
   }
 
   deleteContact(id: string) {
