@@ -1,9 +1,16 @@
-import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
+import { Outlet, Link, Form } from "react-router-dom";
 import CounterStore from '../store/CounterStore.ts';
+import { IContactStore } from "../store/ContactStore.ts";
+import { observer } from "mobx-react";
 import Counter from "../components/Counter";
+interface RootProps {
+  contactStore: IContactStore
+}
 
-const Root = () => {
-  const { contacts }: any = useLoaderData();
+const Root = observer((props: RootProps) => {
+  // const { contacts }: any = useLoaderData();
+  const { contactStore } = props;
+  const { contacts } = contactStore;
 
   return (
     <>
@@ -25,7 +32,7 @@ const Root = () => {
             <button type="submit">New</button>
           </Form>
         </div>
-        <Counter store={CounterStore}/>
+        <Counter counterStore={CounterStore}/>
         <nav>
           {contacts.length ? (
             <ul>
@@ -37,7 +44,7 @@ const Root = () => {
                         {contact.first} {contact.last}
                       </>
                     ) : (
-                      <i>No Name</i>
+                      <i>No Contact name</i>
                     )}{" "}
                     {contact.favorite && <span>★</span>}
                   </Link>
@@ -49,14 +56,6 @@ const Root = () => {
               <i>No contacts</i>
             </p>
           )}
-          {/* <ul>
-            <li>
-              <Link to={`/contacts/1`}>Your Name</Link>
-            </li>
-            <li>
-              <Link to={`/contacts/2`}>Your Friend</Link>
-            </li>
-          </ul> */}
         </nav>
       </div>
       <div id="detail">
@@ -64,6 +63,6 @@ const Root = () => {
       </div>
     </>
   );
-}
+})
 
 export default Root;
