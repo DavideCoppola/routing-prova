@@ -1,4 +1,4 @@
-import { Form/* , useLoaderData */, useParams } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import { IContactStore } from "../store/ContactStore";
 
@@ -7,7 +7,7 @@ interface EditContactProps {
 }
 
 const EditContact = observer((props: EditContactProps) => {
-  // const { contact }: any = useLoaderData();
+
   const { contactStore } = props;
   const { contactId } = useParams();
   const contact = contactStore.getContact(contactId ?? '');

@@ -1,6 +1,7 @@
-import { Outlet, Link, Form } from "react-router-dom";
+import { Outlet, /* Link, */ Form, NavLink, } from "react-router-dom";
 import CounterStore from '../store/CounterStore.ts';
 import { IContactStore } from "../store/ContactStore.ts";
+import { Contact } from "../types/ContactStoreTypes.ts";
 import { observer } from "mobx-react";
 import Counter from "../components/Counter";
 interface RootProps {
@@ -8,7 +9,7 @@ interface RootProps {
 }
 
 const Root = observer((props: RootProps) => {
-  // const { contacts }: any = useLoaderData();
+  
   const { contactStore } = props;
   const { contacts } = contactStore;
 
@@ -34,11 +35,20 @@ const Root = observer((props: RootProps) => {
         </div>
         <Counter counterStore={CounterStore}/>
         <nav>
-          {contacts.length ? (
+          {contacts.length > 0 ? (
             <ul>
-              {contacts.map((contact: any) => (
+              {contacts.map((contact: Contact) => (
                 <li key={contact.id}>
-                  <Link to={`contacts/${contact.id}`}>
+                  <NavLink
+                    to={`contacts/${contact.id}`}
+                    className={({ isActive, isPending }) =>
+                      isActive
+                        ? "active"
+                        : isPending
+                        ? "pending"
+                        : ""
+                    }
+                  >
                     {contact.first || contact.last ? (
                       <>
                         {contact.first} {contact.last}
@@ -47,7 +57,7 @@ const Root = observer((props: RootProps) => {
                       <i>No Contact name</i>
                     )}{" "}
                     {contact.favorite && <span>★</span>}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>
