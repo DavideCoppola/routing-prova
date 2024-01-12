@@ -45,15 +45,15 @@ class ContactStore implements IContactStore {
   }
 
   updateContact(id: string, updates: {[key: string]: any}) {
-    const contact = this.contacts.find((contact: any) => contact.id === id);
-    const contactIndex = this.contacts.findIndex((contact: any) => contact.id === id);
+    const contact = this.contacts.find((contact: Contact) => contact.id === id);
+    const contactIndex = this.contacts.findIndex((contact: Contact) => contact.id === id);
     if (!contact) throw new Error("No contact found for" + id);
     Object.assign(contact, updates);
     this.contacts[contactIndex] = contact;
   }
 
   deleteContact(id: string) {
-    const index = this.contacts.findIndex((contact: any) => contact.id === id);
+    const index = this.contacts.findIndex((contact: Contact) => contact.id === id);
     if (index > -1) {
       this.contacts.splice(index, 1);
       return true;

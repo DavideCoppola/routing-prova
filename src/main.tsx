@@ -3,12 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
-  /* rootLoader, */
-  /* rootAction, */
-  /* contactLoader, */
-  /* editContactAction, */
   rootActionHandler,
-  editContactActionHandler
+  editContactActionHandler,
+  destroyContactHandler
 } from "./utils.ts";
 import ContactStore from "./store/ContactStore.ts";
 import Root from "./routes/Root.tsx";
@@ -26,7 +23,6 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root contactStore={contactStore} />,
     errorElement: <ErrorPage />,
-    /* loader: rootLoader, */
     action: () => rootActionHandler(contactStore),
     children: [
       {
@@ -39,6 +35,11 @@ const router = createBrowserRouter([
         element: <EditContact contactStore={contactStore} />,
         /* loader: contactLoader, */
         action: ({request, params}: any) => editContactActionHandler(request, params, contactStore),
+      },
+      {
+        path: "contacts/:contactId/destroy",
+        action: ({ params }: any) => destroyContactHandler(params, contactStore),
+        errorElement: <div>Oops! There was an error.</div>,
       },
     ],
   },
