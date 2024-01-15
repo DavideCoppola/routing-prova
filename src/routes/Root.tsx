@@ -10,7 +10,7 @@ interface RootProps {
 
 const Root = observer((props: RootProps) => {
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams/* , setSearchParams */] = useSearchParams();
   const navigation = useNavigation();
   const submit = useSubmit();
   
@@ -18,11 +18,18 @@ const Root = observer((props: RootProps) => {
   const { contacts } = contactStore;
 
   const searchedFilter = searchParams.get("q");
-  console.log('searchParams: ', searchParams);
-  console.log('fake: ', setSearchParams);
+
+  const searching =
+    navigation.location &&
+    new URLSearchParams(navigation.location.search).has(
+      "q"
+    );
 
   const onChangeSearchHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    submit(event.currentTarget.form);
+    const isFirstSearch = searchedFilter == null;
+    submit(event.currentTarget.form, {
+      replace: !isFirstSearch,
+    });
   }
 
   return (
@@ -33,6 +40,7 @@ const Root = observer((props: RootProps) => {
           <Form  id="search-form" role="search">
             <input
               id="q"
+              className={searching ? "loading" : ""}
               aria-label="Search contacts"
               placeholder="Search"
               type="search"
@@ -40,7 +48,7 @@ const Root = observer((props: RootProps) => {
               defaultValue={searchedFilter ?? ''}
               onChange={onChangeSearchHandler}
             />
-            <div id="search-spinner" aria-hidden hidden={true} />
+            <div id="search-spinner" aria-hidden hidden={!searching} />
             <div className="sr-only" aria-live="polite"></div>
           </Form >
           <Form method="post">
