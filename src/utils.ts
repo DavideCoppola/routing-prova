@@ -19,3 +19,11 @@ export function destroyContactHandler( params: any, contactStore: IContactStore)
   return redirect(`/`);
 }
 
+export async function actionContactHandler(request: any, params: any, contactStore: IContactStore) {
+  const formData = await request.formData();
+  contactStore.updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true",
+  });
+  return null;
+}
+

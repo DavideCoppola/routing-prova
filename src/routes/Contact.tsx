@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import { Form, useParams } from "react-router-dom";
+import { Form, useParams, useFetcher } from "react-router-dom";
 import { IContactStore } from "../store/ContactStore";
 import { Contact as ContactType } from "../types/ContactStoreTypes";
 
@@ -81,10 +81,11 @@ interface FavoriteProps {
 }
 
 function Favorite({ contact }: FavoriteProps) {
-  // yes, this is a `let` for later
+  const fetcher = useFetcher();
   const favorite = contact.favorite;
+
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
@@ -96,7 +97,7 @@ function Favorite({ contact }: FavoriteProps) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
 

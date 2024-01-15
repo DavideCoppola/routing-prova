@@ -5,7 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
   rootActionHandler,
   editContactActionHandler,
-  destroyContactHandler
+  destroyContactHandler,
+  actionContactHandler
 } from "./utils.ts";
 import ContactStore from "./store/ContactStore.ts";
 import Root from "./routes/Root.tsx";
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
         path: "contacts/:contactId",
         element: <Contact contactStore={contactStore} />,
         /* loader: contactLoader, */
+        action: ({request, params}: any) => actionContactHandler(request, params, contactStore)
       },
       {
         path: "contacts/:contactId/edit",
